@@ -13,7 +13,7 @@ public abstract class Command {
     protected final String description;
     protected final ArrayList<CommandOption> options = new ArrayList<>();
 
-    public Command(String name, String description, CommandOption... commandOptions) {
+    public Command(String name, String description, String category, CommandOption... commandOptions) {
         this.name = name;
         this.description = description;
         Collections.addAll(this.options, commandOptions);

@@ -1,6 +1,7 @@
 package dev.nathan.commands;
 
-import dev.nathan.commands.impl.PingCommand;
+import dev.nathan.commands.impl.utils.HelpCommand;
+import dev.nathan.commands.impl.utils.PingCommand;
 
 import java.util.ArrayList;
 
@@ -10,6 +11,7 @@ public class CommandManager {
 
     public static void init() {
         CommandManager.getCommands().add(new PingCommand());
+        CommandManager.getCommands().add(new HelpCommand());
     }
 
     public static ArrayList<Command> getCommands() {

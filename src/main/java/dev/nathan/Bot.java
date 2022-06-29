@@ -11,15 +11,17 @@ import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
 
 import javax.security.auth.login.LoginException;
+import java.awt.*;
 
 public class Bot {
 
     public static JDA INSTANCE;
+    public static final Color THEME = new Color(55, 200, 255);
 
     public static void main(String[] args) throws LoginException, InterruptedException {
         CommandManager.init();
 
-        INSTANCE = JDABuilder.createDefault("YOUR_DISCORD_BOT_TOKEN")
+        INSTANCE = JDABuilder.createDefault(Config.BOT_TOKEN)
                 .setDisabledIntents(GatewayIntent.GUILD_WEBHOOKS)
                 .enableCache(CacheFlag.VOICE_STATE)
                 .setActivity(Activity.watching("all servers!"))
