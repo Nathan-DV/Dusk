@@ -18,7 +18,7 @@ public class Bot {
     public static JDA INSTANCE;
     public static final Color THEME = new Color(55, 200, 255);
 
-    public static void main(String[] args) throws LoginException, InterruptedException {
+    private Bot() throws LoginException, InterruptedException {
         CommandManager.init();
 
         INSTANCE = JDABuilder.createDefault(Config.BOT_TOKEN)
@@ -32,9 +32,13 @@ public class Bot {
 
         for (Guild guild : INSTANCE.getGuilds()) {
             for (Command command : CommandManager.getCommands()) {
-                command.buildCommand(guild);
+                command.upsertCommand(guild);
             }
         }
+    }
+
+    public static void main(String[] args) throws LoginException, InterruptedException {
+        new Bot();
     }
 
 }

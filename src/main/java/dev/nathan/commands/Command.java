@@ -1,5 +1,6 @@
 package dev.nathan.commands;
 
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.requests.restaction.CommandCreateAction;
@@ -10,17 +11,24 @@ import java.util.Collections;
 public abstract class Command {
 
     protected final String name;
+    protected final String category;
     protected final String description;
-    protected final ArrayList<CommandOption> options = new ArrayList<>();
 
-    public Command(String name, String description, String category, CommandOption... commandOptions) {
+    protected final ArrayList<CommandOption> options = new ArrayList<>();
+    protected final ArrayList<Permission> permissions = new ArrayList<>();
+
+    public Command(String name, String description, String category) {
         this.name = name;
+        this.category = category;
         this.description = description;
-        Collections.addAll(this.options, commandOptions);
     }
 
     public String getName() {
         return name;
+    }
+
+    public String getCategory() {
+        return category;
     }
 
     public String getDescription() {
@@ -31,7 +39,11 @@ public abstract class Command {
         return options;
     }
 
-    public void buildCommand(Guild guild) {
+    public ArrayList<Permission> getPermissions() {
+        return permissions;
+    }
+
+    public void upsertCommand(Guild guild) {
         CommandCreateAction command = guild.upsertCommand(this.getName(), this.getDescription());
 
         if (this.getOptions().size() != 0) {
@@ -41,6 +53,14 @@ public abstract class Command {
         }
 
         command.queue();
+    }
+
+    protected void addOptions(CommandOption... options) {
+        Collections.addAll(this.options, options);
+    }
+
+    protected void addPermissions(Permission... permissions) {
+        Collections.addAll(this.permissions, permissions);
     }
 
     public abstract void run(SlashCommandInteractionEvent event);
