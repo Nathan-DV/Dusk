@@ -25,7 +25,7 @@ public class CommandHandler extends ListenerAdapter {
                             .setColor(Bot.THEME)
                             .build();
 
-                    event.getInteraction().replyEmbeds(messageEmbed).queue();
+                    event.getInteraction().replyEmbeds(messageEmbed).setEphemeral(true).queue();
                     break;
                 } else {
                     command.run(event);

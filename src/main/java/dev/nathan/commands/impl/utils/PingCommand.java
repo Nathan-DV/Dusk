@@ -12,7 +12,6 @@ public class PingCommand extends Command {
 
     public PingCommand() {
         super("ping", "Replies with the bots ping!", CommandCategory.UTILS);
-        this.addPermissions(Permission.ADMINISTRATOR);
     }
 
     @Override

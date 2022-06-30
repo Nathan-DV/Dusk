@@ -22,13 +22,15 @@ public class HelpCommand extends Command {
 
     @Override
     public void run(SlashCommandInteractionEvent event) {
-        event.deferReply().queue();
-
-        MessageEmbed embedBuilder = new EmbedBuilder()
-                .setTitle("Help Command")
+        MessageEmbed messageEmbed = new EmbedBuilder()
+                .setAuthor("Help Command | " + event.getGuild().getName(), event.getGuild().getIconUrl())
+                .setColor(Bot.THEME)
                 .setThumbnail(Bot.INSTANCE.getSelfUser().getAvatarUrl())
+                .addField(CommandCategory.MODERATION, getCommandsByCategory(CommandCategory.MODERATION), false)
                 .addField(CommandCategory.UTILS, getCommandsByCategory(CommandCategory.UTILS), false)
                 .build();
+
+        event.getInteraction().replyEmbeds(messageEmbed).queue();
     }
 
     public String getCommandsByCategory(String category) {
@@ -37,7 +39,7 @@ public class HelpCommand extends Command {
 
         commands.forEach(command -> {
             String value = string.get();
-            string.set(value + command.getName());
+            string.set(value + "**`" + command.getName() + "`** ");
         });
 
         return string.get();
