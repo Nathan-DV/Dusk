@@ -10,7 +10,7 @@ import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEve
 public class PingCommand extends Command {
 
     public PingCommand() {
-        super("ping", "Replies with the bots ping!", CommandCategory.UTILS);
+        super("Ping", "Replies with the bots ping!", CommandCategory.UTILS);
     }
 
     @Override

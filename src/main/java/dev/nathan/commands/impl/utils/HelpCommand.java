@@ -16,12 +16,39 @@ import java.util.stream.Stream;
 public class HelpCommand extends Command {
 
     public HelpCommand() {
-        super("help", "Displays all commands!", CommandCategory.UTILS);
+        super("Help", "Displays all commands!", CommandCategory.UTILS);
         this.addOptions(new CommandOption(OptionType.STRING, "command", "The command name for the command you would like info on.", false));
     }
 
     @Override
     public void run(SlashCommandInteractionEvent event) {
+        if (event.getOption("command") != null) {
+            Command command = CommandManager.getCommand(event.getOption("command").getAsString());
+
+            if (command == null) {
+                MessageEmbed messageEmbed = new EmbedBuilder()
+                        .setColor(Bot.THEME)
+                        .setDescription("I could not find the command you provided!")
+                        .build();
+
+                event.getInteraction().replyEmbeds(messageEmbed).setEphemeral(true).queue();
+
+                return;
+            }
+
+            MessageEmbed messageEmbed = new EmbedBuilder()
+                    .setAuthor(command.getName() + " Command | " + event.getGuild().getName(), event.getGuild().getIconUrl())
+                    .setColor(Bot.THEME)
+                    .setThumbnail(Bot.INSTANCE.getSelfUser().getAvatarUrl())
+                    .addField("Name", command.getName(), true)
+                    .addField(CommandCategory.UTILS, getCommandsByCategory(CommandCategory.UTILS), true)
+                    .build();
+
+            event.getInteraction().replyEmbeds(messageEmbed).queue();
+
+            return;
+        }
+
         MessageEmbed messageEmbed = new EmbedBuilder()
                 .setAuthor("Help Command | " + event.getGuild().getName(), event.getGuild().getIconUrl())
                 .setColor(Bot.THEME)

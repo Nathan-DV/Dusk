@@ -5,6 +5,7 @@ import dev.nathan.commands.CommandManager;
 import dev.nathan.listeners.CommandHandler;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
+import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.requests.GatewayIntent;
@@ -24,7 +25,6 @@ public class Bot {
         INSTANCE = JDABuilder.createDefault(Config.BOT_TOKEN)
                 .setDisabledIntents(GatewayIntent.GUILD_WEBHOOKS)
                 .enableCache(CacheFlag.VOICE_STATE)
-                .setActivity(Activity.watching("all servers!"))
                 .addEventListeners(new CommandHandler())
                 .build();
 
@@ -35,6 +35,8 @@ public class Bot {
                 command.upsertCommand(guild);
             }
         }
+
+        INSTANCE.getPresence().setPresence(OnlineStatus.DO_NOT_DISTURB, Activity.watching(INSTANCE.getGuilds().size() + " servers!"));
     }
 
     public static void main(String[] args) throws LoginException, InterruptedException {

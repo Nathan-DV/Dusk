@@ -23,8 +23,12 @@ public abstract class Command {
         this.description = description;
     }
 
-    public String getName() {
+    public String getDisplayName() {
         return name;
+    }
+
+    public String getName() {
+        return name.toLowerCase();
     }
 
     public String getCategory() {

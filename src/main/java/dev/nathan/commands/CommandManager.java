@@ -14,6 +14,18 @@ public class CommandManager {
         CommandManager.getCommands().add(new HelpCommand());
     }
 
+    public static Command getCommand(String name) {
+        Command cmd = null;
+
+        for (Command command : commands) {
+            if (command.getName().equalsIgnoreCase(name)) {
+                cmd = command;
+            }
+        }
+
+        return cmd;
+    }
+
     public static ArrayList<Command> getCommands() {
         return commands;
     }
