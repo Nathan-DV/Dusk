@@ -37,11 +37,12 @@ public class HelpCommand extends Command {
             }
 
             MessageEmbed messageEmbed = new EmbedBuilder()
-                    .setAuthor(command.getName() + " Command | " + event.getGuild().getName(), event.getGuild().getIconUrl())
+                    .setAuthor(command.getDisplayName() + " Command | " + event.getGuild().getName(), event.getGuild().getIconUrl())
                     .setColor(Bot.THEME)
                     .setThumbnail(Bot.INSTANCE.getSelfUser().getAvatarUrl())
-                    .addField("Name", command.getName(), true)
-                    .addField(CommandCategory.UTILS, getCommandsByCategory(CommandCategory.UTILS), true)
+                    .addField("Name", "**`" + command.getDisplayName() + "`**", true)
+                    .addField("Description", "**`" + command.getDescription() + "`**", true)
+                    .addField("Category", "**`" + command.getCategory() + "`**", false)
                     .build();
 
             event.getInteraction().replyEmbeds(messageEmbed).queue();
