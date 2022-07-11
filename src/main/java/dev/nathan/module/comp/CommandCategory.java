@@ -1,4 +1,4 @@
-package dev.nathan.commands;
+package dev.nathan.module.comp;
 
 public class CommandCategory {
 
