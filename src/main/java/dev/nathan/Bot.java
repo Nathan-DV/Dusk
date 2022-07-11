@@ -37,20 +37,22 @@ public class Bot {
         INSTANCE.awaitReady();
         INSTANCE.getPresence().setPresence(OnlineStatus.DO_NOT_DISTURB, Activity.watching(INSTANCE.getGuilds().size() + " servers!"));
 
-        for (Guild guild : Bot.INSTANCE.getGuilds()) {
-            for (Command command : ModuleManager.getCommands()) {
-                command.register();
-                CommandCreateAction cmd = guild.upsertCommand(command.getName(), command.getDescription());
+        try {
+            for (Guild guild : Bot.INSTANCE.getGuilds()) {
+                for (Command command : ModuleManager.getCommands()) {
+                    command.register();
+                    CommandCreateAction cmd = guild.upsertCommand(command.getName(), command.getDescription());
 
-                if (command.getOptions().size() != 0) {
-                    for (CommandOption option : command.getOptions()) {
-                        cmd = cmd.addOption(option.getOptionType(), option.getName(), option.getDescription(), option.isRequired());
+                    if (command.getOptions().size() != 0) {
+                        for (CommandOption option : command.getOptions()) {
+                            cmd = cmd.addOption(option.getOptionType(), option.getName(), option.getDescription(), option.isRequired());
+                        }
                     }
-                }
 
-                cmd.queue();
+                    cmd.queue();
+                }
             }
-        }
+        } catch (IllegalArgumentException ignored) { }
     }
 
     public static void main(String[] args) throws LoginException, InterruptedException {

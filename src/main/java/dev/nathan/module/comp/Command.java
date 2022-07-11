@@ -14,9 +14,9 @@ public abstract class Command {
 
     protected final String name;
     @Getter
-    protected final String category;
-    @Getter
     protected final String description;
+    @Getter
+    protected final String category;
 
     @Getter
     protected final ArrayList<CommandOption> options = new ArrayList<>();
