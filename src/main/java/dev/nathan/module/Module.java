@@ -30,26 +30,6 @@ public class Module extends ListenerAdapter {
         this.commands.add(command);
     }
 
-    public void upsertCommands() {
-        if (Type.COMMANDS == this.type) {
-            for (Guild guild : Bot.INSTANCE.getGuilds()) {
-                for (Command command : commands) {
-                    command.register();
-
-                    CommandCreateAction cmd = guild.upsertCommand(command.getName(), command.getDescription());
-
-                    if (command.getOptions().size() != 0) {
-                        for (CommandOption option : command.getOptions()) {
-                            cmd = cmd.addOption(option.getOptionType(), option.getName(), option.getDescription(), option.isRequired());
-                        }
-                    }
-
-                    cmd.queue();
-                }
-            }
-        }
-    }
-
     @Override
     public void onSlashCommandInteraction(@NotNull SlashCommandInteractionEvent event) {
         if (this.type == Type.COMMANDS) {

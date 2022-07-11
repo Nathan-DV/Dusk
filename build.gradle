@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id "io.freefair.lombok" version "6.5.0.2"
 }
 
 group 'dev.nathan'
@@ -11,5 +12,4 @@ repositories {
 
 dependencies {
     implementation("net.dv8tion:JDA:5.0.0-alpha.13")
-    implementation("org.projectlombok:lombok:1.18.24")
 }

@@ -1,17 +1,14 @@
 package dev.nathan.module.impl;
 
 import dev.nathan.Bot;
-import dev.nathan.commands.CommandManager;
 import dev.nathan.module.Module;
+import dev.nathan.module.ModuleManager;
 import dev.nathan.module.comp.Command;
 import dev.nathan.module.comp.CommandCategory;
 import dev.nathan.module.comp.CommandOption;
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.Permission;
-import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
-import net.dv8tion.jda.api.exceptions.ErrorResponseException;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 
 import java.util.concurrent.atomic.AtomicReference;
@@ -32,7 +29,7 @@ public class UtilsModule extends Module {
             @Override
             public void run(SlashCommandInteractionEvent event) {
                 if (event.getOption("command") != null) {
-                    dev.nathan.commands.Command command = CommandManager.getCommand(event.getOption("command").getAsString());
+                    Command command = ModuleManager.getCommand(event.getOption("command").getAsString());
 
                     if (command == null) {
                         MessageEmbed messageEmbed = new EmbedBuilder()
@@ -63,8 +60,8 @@ public class UtilsModule extends Module {
                         .setAuthor("Help Command | " + event.getGuild().getName(), event.getGuild().getIconUrl())
                         .setColor(Bot.THEME)
                         .setThumbnail(Bot.INSTANCE.getSelfUser().getAvatarUrl())
-                        .addField(dev.nathan.commands.CommandCategory.MODERATION, getCommandsByCategory(dev.nathan.commands.CommandCategory.MODERATION), false)
-                        .addField(dev.nathan.commands.CommandCategory.UTILS, getCommandsByCategory(dev.nathan.commands.CommandCategory.UTILS), false)
+                        .addField(CommandCategory.MODERATION, getCommandsByCategory(CommandCategory.MODERATION), false)
+                        .addField(CommandCategory.UTILS, getCommandsByCategory(CommandCategory.UTILS), false)
                         .build();
 
                 event.getInteraction().replyEmbeds(messageEmbed).queue();
@@ -95,7 +92,7 @@ public class UtilsModule extends Module {
 
     public String getCommandsByCategory(String category) {
         AtomicReference<String> string = new AtomicReference<>("");
-        Stream<dev.nathan.commands.Command> commands = CommandManager.getCommands().stream().filter((command) -> command.getCategory().equals(category));
+        Stream<Command> commands = ModuleManager.getCommands().stream().filter((command) -> command.getCategory().equals(category));
 
         commands.forEach(command -> {
             String value = string.get();

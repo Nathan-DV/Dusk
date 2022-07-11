@@ -1,5 +1,6 @@
 package dev.nathan;
 
+import dev.nathan.module.Module;
 import dev.nathan.module.ModuleManager;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
@@ -17,19 +18,19 @@ public class Bot {
     public static final Color THEME = new Color(55, 200, 255);
 
     private Bot() throws LoginException, InterruptedException {
+
         INSTANCE = JDABuilder.createDefault(Config.BOT_TOKEN)
                 .setDisabledIntents(GatewayIntent.GUILD_WEBHOOKS)
                 .enableCache(CacheFlag.VOICE_STATE)
                 .build();
 
-        INSTANCE.awaitReady();
-
         ModuleManager.onInitialize();
-        ModuleManager.getModules().forEach((module -> {
-            module.upsertCommands();
-            INSTANCE.addEventListener(module);
-        }));
 
+        for (Module module : ModuleManager.getModules()) {
+            INSTANCE.addEventListener(module);
+        }
+
+        INSTANCE.awaitReady();
         INSTANCE.getPresence().setPresence(OnlineStatus.DO_NOT_DISTURB, Activity.watching(INSTANCE.getGuilds().size() + " servers!"));
     }
 
