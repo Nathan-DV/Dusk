@@ -17,7 +17,7 @@ public class ModerationModule extends Module {
     public ModerationModule() {
         super(Type.COMMANDS);
 
-        this.addCommand(new Command("kick", "Ban a member from the server!", CommandCategory.MODERATION) {
+        this.addCommand(new Command("Kick", "Ban a member from the server!", CommandCategory.MODERATION) {
 
             @Override
             public void register() {
@@ -64,7 +64,7 @@ public class ModerationModule extends Module {
 
         });
 
-        this.addCommand(new Command("ban", "Ban a member from the server!", CommandCategory.MODERATION) {
+        this.addCommand(new Command("Ban", "Ban a member from the server!", CommandCategory.MODERATION) {
 
             @Override
             public void register() {
