@@ -1,17 +1,13 @@
 package dev.nathan.module;
 
-import dev.nathan.Bot;
 import dev.nathan.module.comp.Command;
-import dev.nathan.module.comp.CommandOption;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
-import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import net.dv8tion.jda.api.requests.restaction.CommandCreateAction;
 import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
